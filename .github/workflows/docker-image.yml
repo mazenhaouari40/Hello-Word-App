@@ -27,3 +27,14 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/flask-app:latest
+
+  deploy:
+    needs: build-and-push   # démarre après le build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
